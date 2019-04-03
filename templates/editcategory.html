@@ -1,0 +1,56 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel=stylesheet type=text/css href="{{url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body> -->
+  {% include "navbar.html" %}
+
+
+<div class="container">
+  <h1 align='center'>EDIT CATEGORY-ITEM</h1>
+  <form class="form-group" action="#" method="post">
+    <label for="category" class="mb-2 mr-sm-2">Name:</label>
+    <input type="text" class="form-control mb-2 mr-sm-2" id="category" placeholder="Enter name" name="name">
+    <div class="form-group">
+      <label for="comment" class="mb-2 mr-sm-2">Description:</label>
+      <textarea class="form-control" rows="5" id="comment" name="description"></textarea>
+    </div>
+
+
+      <h6>Category:</h6>
+      <!--MESSAGE FLASHING  -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+
+<ul>
+{% for message in messages %}
+  <li><strong>{{message}}</strong></li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+      <select class="form__select" name="category">
+              {% for category in categories %}
+                <option value="{{category.id}}">{{category.name}}</option>
+              {% endfor %}
+            </select>
+            <div class="form-check mb-2 mr-sm-2">
+
+            </div>
+  <button type="submit" class="btn btn-primary mb-2">Submit</button>
+  </form>
+</div>
+</body>
+</html>
