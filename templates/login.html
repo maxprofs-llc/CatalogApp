@@ -3,7 +3,7 @@
 <head>
 
   <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4  /jquery.min.js">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
     </script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
     </script>
@@ -26,7 +26,11 @@
 
 <script>
     $('#signinButton').click(function() {
-      
+      auth2.grantOfflineAccess().then(signInCallback);
+    });
+    </script>
+    <script>
+
 function signInCallback(authResult) {
   if (authResult['code']) {
 
@@ -35,36 +39,32 @@ function signInCallback(authResult) {
 
     // Send the code to the server
     $.ajax({
-      type: 'POST',
-      url: '/gconnect?state={{STATE}}',
-      // Always include an `X-Requested-With` header in every AJAX request,
-      // to protect against CSRF attacks.
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-      },
-      contentType: 'application/octet-stream; charset=utf-8',
-      success:function(result){
-              $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
-                   setTimeout(function() {
-                    window.location.href = "/category";
-                   }, 2000);
-            },
-            processData:false,
-            data:authResult['code']
-          });
-        } else{
-          // handle error
-          console.log('There was an error: ' + authResult['error']);
-          $('#result').html('Failed to make a server-side call. Check your configuration and console.');
-        }
-      }
-      auth2.grantOfflineAccess().then(signInCallback);
-    });
-  </script>
+    type: 'POST',
+    url: '/gconnect?state={{STATE}}',
+    processData: false,
+    data: authResult['code'],
+    contentType: 'application/octet-stream; charset=utf-8',
+    success: function(result) {
+    // Handle or verify the server response if necessary.
+    if (result) {
+    $('#login').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+    setTimeout(function() {
+    window.location.href = "/category";
+    }, 4000);
 
-</body>
+    } else if (authResult['error']) {
+    console.log('There was an error: ' + authResult['error']);
+    } else {
+    $('#login').html('Failed to make a server-side call. Check your configuration and console.');
+    }
+    }
+
+    }); } }
+    </script>
+
+
+  </body>
 </html>
-
 <!--
 <script>
   window.fbAsyncInit = function() {
